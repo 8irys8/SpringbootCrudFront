@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SpringBootFront</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+</head>
+<body class="container">
+<h1>*List of all Users*</h1>
+<div class="float-right">
+    <a href="/logout" class="btn btn-disabled">LogOut</a>
+</div>
+
+<table id="user_table" class="table table-striped table-bordered">
+</table>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" onclick="showAddUser()">
+    Create new user
+</button>
+
+<!-- Modal add -->
+<div class="modal fade" id="addUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="user_form" method="post" class="col card p-3 mb-5">
+                    <input id="id"  type="hidden"
+                           class="form-control"/>
+                    <div class="form-group">
+                        <label for="username">username</label>
+                        <input id="username" name="username" placeholder="Enter username" required type="text"
+                               class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" >password</label>
+                        <input id="password"name="password" placeholder="Enter password" required type="password"
+                               class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input id="firstName" name="firstname" placeholder="Enter First Name" required type="text"
+                               class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input id="lastName" name="lastname" placeholder="Enter Last Name" required type="text"
+                               class="form-control"/>
+                    </div>
+                    <!--    <div style="color:red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address error</div>-->
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input id="address" name="address" placeholder="Enter address" required type="text"
+                               class="form-control"/>
+                    </div>
+                    <!--    <div style="color:red" th:if="${#fields.hasErrors('contact')}" th:errors="*{contact}">Contact error</div>-->
+                    <div class="form-group">
+                        <label for="contact">Phone number</label>
+                        <input id="contact" name="contact" placeholder="Enter phone number" required type="text"
+                               class="form-control"/>
+                    </div>
+
+                    <div class="form-group">
+                        <tr>
+                            <td><label for="email">Email</label></td>
+                            <td><input id="email" name="email" placeholder="Enter email" required type="text"
+                                       class="form-control"/></td>
+                        </tr>
+                    </div>
+                    <div class="form-group">
+                        <label>Select role</label>
+                        <select class="form-control" name="role" id="roles">
+                        </select>
+                    </div>
+                    <div >
+                        <input onclick="addUser()" type="button" class="btn btn-primary" value="Create User">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal edit -->
+<div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" onclick="showAddUserRole()" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="user_edit_form" method="post" class="col card p-3 mb-5">
+                    <input id="id_edit" name="id"  type="hidden"/>
+                    <div class="form-group">
+                        <label for="username">username</label>
+                        <input id="username_edit" name="username" placeholder="Enter username" required type="text"
+                               class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" >password</label>
+                        <input id="password_edit"name="password" placeholder="Enter password" required type="password"
+                               class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input id="firstName_edit" name="firstname" placeholder="Enter First Name" required type="text"
+                               class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input id="lastName_edit" name="lastname" placeholder="Enter Last Name" required type="text"
+                               class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input id="address_edit" name="address" placeholder="Enter address" required type="text"
+                               class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact">Phone number</label>
+                        <input id="contact_edit" name="contact" placeholder="Enter phone number" required type="text"
+                               class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <tr>
+                            <td><label for="email">Email</label></td>
+                            <td><input id="email_edit" name="email" placeholder="Enter email" required type="text"
+                                       class="form-control"/></td>
+                        </tr>
+                    </div>
+                    <div class="form-group">
+                        <label>Select role</label>
+                        <select class="form-control" name="role" id="roles_id">
+                        </select>
+                    </div>
+                    <div >
+                        <input onclick="editUser();" type="button" class="btn btn-primary" value="Edit">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="app.js"></script>
+</html>
